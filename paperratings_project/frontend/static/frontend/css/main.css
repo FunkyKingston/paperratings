@@ -1,0 +1,543 @@
+
+
+/* ------------ */
+/* Import fonts */
+/* ------------ */
+@font-face {
+  font-family: Merriweather;
+  src: url(../fonts/Merriweather/Merriweather-Regular.ttf);
+}
+
+@font-face {
+  font-family: Lato;
+  src: url(../fonts/Lato/Lato-Regular.ttf);
+}
+
+/* CSS syntax:
+   id selector: #
+   class selector: .
+*/
+
+/* ------------- */
+/* CSS Variables */
+/* ------------- */
+:root{
+  --font-size: 12.5px; 
+  font-size: var(--font-size);
+  color: black;
+  --navbar-height: 3rem;
+  --bg-body: #fff;
+  --dark: #262626;
+  --primary: #ddd;
+  --light: #fff;
+  --shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+  --side-padding: 0.6rem;
+}
+
+/* apply for every element on the page */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+html {
+  box-sizing: border-box; 
+  font-family: "Merriweather"; /* default Font, use "Lato" for some headers etc. */
+}
+
+/* --------------- */
+/* Text formatting */
+/* --------------- */
+p {
+  line-height: 1.2em; /* this it seems is the default value */
+}
+
+hr {
+  border: 0.05rem solid var(--dark);
+}
+
+.sans-serif {
+  font-family: "Lato";
+}
+
+.text-center {
+  text-align: center;
+}
+
+.no-text-decoration {
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.indented {
+  text-indent: 3rem;
+}
+
+.mb0 {
+  margin-bottom: 0;
+}
+
+.mb1 {
+  margin-bottom: 0.6rem;
+}
+
+
+
+/* ------ */
+/* Layout */
+/* ------ */
+/* wrapper around the whole page */
+.wrapper { /* wrapper wraps the nav bar, content-area div (whichs wraps content-wrapper), footer */
+  background: var(--bg-body);
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; by default, but <footer> becomes placed at bottom due to setting min-height: 100vh; */
+  min-height: 100vh; 
+}
+
+
+/* Header.js component */
+nav {
+  position: fixed;
+  width: 100%; /* flex-shrink: 0; - (not needed here) The element will not shrink: it will retain the width it needs, and not wrap its content. */
+  background: var(--dark);
+  height: var(--navbar-height);
+  line-height: var(--navbar-height);
+  font-family: "Lato";
+  font-size: 1.28rem;
+  display: flex; /* make <nav> itself a flexbox (with default flex-direction: row;) within the vertical flexbox of the [full page] wrapper class */
+  align-items: center; /* makes the "burger button" align (in active media query), other elements already aligned by other means */
+  justify-content: center; /* center the 3 (large width view) nav-link-items elements -> set margin-left/right: auto for corner elements */
+}
+
+/* flex display nested within flex display to achieve centering of the mid element, even when the sizes of the left- and right elements don't match, 
+   as in https://stackoverflow.com/questions/32378953/keep-the-middle-item-centered-when-side-items-have-different-widths */
+.nav-flex-item {
+  display: flex;
+  flex: 1; /* makes the flex display fill the (parent) area */
+  justify-content: center; /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+}
+
+/* select and style every nav-flex-item element that is the n:th child of its parent (=<nav>) - https://www.w3schools.com/cssref/sel_firstchild.asp */
+.nav-flex-item:nth-child(2) ul { 
+  margin-right: auto; 
+}
+
+.nav-flex-item:nth-child(4) ul { 
+  margin-left: auto; 
+}
+
+
+.nav-links ul {
+  background: var(--dark);
+  display: flex;
+  flex-shrink: 0;
+  list-style: none;
+}
+
+
+.nav-links-dropdown {
+  background: var(--dark);
+  position: absolute;
+  top: var(--navbar-height);
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  background: rgba(40, 40, 40, 0.9); 
+  list-style: none;
+
+  line-height: var(--navbar-height);
+  font-family: "Lato";
+  font-size: 1.28rem;
+  z-index: 200;
+}
+
+.nav-links li a,
+.nav-links-dropdown li a {
+  display: block; /* to hover the whole nav background area around the link text, including above and below text */
+  text-decoration: none;
+  color: var(--primary); 
+  padding: 0 20px;
+}
+
+
+.nav-links li a:hover,
+.nav-links-dropdown li a:hover {
+  background: #246396;
+}
+
+/* TO DO: look into styling effects when e.g. clicking a link in mobile view (chrome dev tools), effects differ from desktop view 
+   - the below is not what I'm looking for, but check out other css "pseudo-classes" (such as :active, :hover, ...) [for mobile] 
+*/
+/* .nav-links li a:active {
+  background: red;
+} */
+
+nav .burger {
+  padding: 0 1rem;
+  cursor: pointer;
+  display: none;
+}
+
+nav .burger div {
+  width: 1.5rem;
+  height: 0.2rem;
+  margin: 0.3rem;
+  border-radius: 0.2rem; 
+  background: var(--light);
+  transition: all 0.3s ease;
+}
+
+nav .dummy-burger {
+  display: none;
+  width: 1.5rem;
+  margin: 0.3rem;
+  padding: 0 1rem;
+  
+}
+
+/* Logo (not in use) */
+/* .logo-img {
+  background: url("../img/salt.jpg") transparent center center no-repeat;
+  height: 283px;
+} */
+
+
+/* App.js component - wraps the content area */
+.content-wrapper {
+  flex: 1 0 auto; 
+  /* flex - flex-grow, flex-shrink and flex-basis combined. (Just "auto" is equivalent to "1 1 auto".) 
+     - "0 0 auto" avoids letting .content-wrapper grow and thus avoids unnecessary vertical page-scroll when zoomed in, 
+     however, then the footer is no longer "sticky" as desired, so then that needs another solution 
+  */ 
+  max-width: 80rem; /* less for the content-area-... case .content-area-centered */
+  margin: 0 auto; /* achieves centering */
+  margin-top: var(--navbar-height);
+}
+
+/* Content area - 3 different variants */
+.content-area-full {
+  width: calc(80rem - 2*var(--side-padding));
+  padding-top: 2rem;
+  padding-left: var(--side-padding);
+  padding-right: var(--side-padding);
+}
+
+.content-area-centered { 
+  display: block; /* default */
+  padding-top: 2rem;
+}
+
+.adjust-vertical {
+  position: absolute; 
+  top: 40%; 
+  transform: translate(-50%, -50%);
+}
+
+.content-area-split {
+  margin: 0 0rem;
+  padding-top: 2rem;
+  display: grid;
+  grid-template-columns: 75% 25%;
+  grid-template-areas: 
+    'main-content side-content';
+  width: 80rem; /* changed to 100% in media query for mobile view */
+}
+
+.content-area-split .main-content {
+  grid-area: main-content;
+  background: var(--bg-body);
+  margin: 0 0rem;
+  padding: 0 var(--side-padding);
+}
+
+.content-area-split .side-content {
+  grid-area: side-content;
+  margin: 0 0rem;
+  padding: 0 var(--side-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.side-image {
+  display: flex;
+  justify-content: center;
+}
+
+
+/* Forms */
+.auth-form {
+  width: 12rem;
+}
+
+.form-item {
+  margin-bottom: 0.2rem;
+}
+
+input,
+textarea,
+button {
+  margin: 0;
+  font-family: "Lato";
+  box-sizing: border-box; /* makes input element with width: 100% stay inside the extent of the parent div element */
+  /* font-family: inherit;
+  font-size: inherit;
+  line-height: inherit; */
+}
+
+/*.form-control {*/
+input {
+  display: block;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  /* height: 4rem; */
+  resize: none;
+  /*
+    TO DO: check something like textarea auto-expand, https://codepen.io/vsync/pen/frudD & obsolete but nicer designed version https://codepen.io/vsync/pen/czgrf
+    - Example using a "React class" (that extends React.PureComponent): https://codepen.io/liborgabrhel/pen/eyzwOx
+  */
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn-transparent {
+  border: 1px solid black;
+}
+.btn-transparent:hover {
+  opacity: 0.8;
+}
+
+.btn-large {
+  width: 100%;
+  margin-top: 0.6em;
+  background: #2780E3;
+  border: none;
+  color: #fff;
+  line-height: 1.5;
+  padding: 0.5rem 1rem;
+  font-size: 1.171875rem;
+  border-radius: 0.3rem;
+}
+
+
+.btn-small-blue {
+  background: #2780E3;
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.btn-large:hover,
+.btn-small-blue:hover {
+  background: #2D86E9;
+}
+
+.btn-small-transparent {
+  background: #eeebe4;
+  margin: 0 0.2rem;
+  padding: 0.1rem 0.2rem;
+  border: 1px solid black;
+}
+.btn-small-transparent:hover {
+  opacity: 0.8;
+}
+
+
+/* Papers.js component */
+.paper-item {
+  background: #f4f1ea;
+  padding: 0.2rem 0.2rem;
+  margin: 0.6rem 0;
+  border-radius: 5px;
+}
+
+.link-style {
+  color: #000;
+  text-decoration: none;
+}
+
+.link-style:hover{
+  text-decoration: underline; 
+}
+
+.paper-filters {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* PaperDetails.js component */
+.paper-details {
+  background: #f4f1ea;
+  padding: 0.2rem 0.2rem;
+  margin: 0.6rem 0;
+  border-radius: 5px;
+}
+
+.comment-item {
+  background: #f4f1ea;
+  padding: 0.2rem 0.2rem;
+  margin: 0.6rem 0;
+  border-radius: 5px;
+}
+
+
+/* About.js component */
+.about-item {
+  margin-top: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.about-headers {
+  width: 80%; /* 80% of its parent div element, which itself has default width: 100%; of its own parent */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* flex-shrink: 0; */
+  justify-content: space-between;
+  /* align-content: flex-end; */
+  list-style-position: inside;
+  list-style: none;
+}
+
+
+/* XYZ component */
+/* XYZ component */
+/* XYZ component */
+
+
+
+/* Footer.js component */
+/* https://css-tricks.com/couple-takes-sticky-footer/ - using the flexbox approach */
+footer {
+  background: #f4f1ea;
+  height: 5rem;
+  line-height: 2rem;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+
+/* ------------- */
+/* Media queries */
+/* ------------- */
+/* Note: in media queries, rem doesn't adapt to the [root] font-size but uses the default 16, also var() can't be used in queries */
+/* @media screen and (max-width:80rem) { */
+/* @media screen and (max-width: calc(var(--font-size) * 80) ) { */
+
+
+  
+@media (max-width: calc(12.5px * 80) ) {
+  .wrapper { /* wrapper wraps the nav bar, content-area div (whichs wraps content-wrapper), footer */
+    width: 80rem;
+    /* background: violet; */
+  }
+  
+  nav {
+    position: static;
+    /* background: blue; */
+  }
+
+  .content-wrapper {
+    margin-top: 0; /* when nav no longer has position: fixed; reset margin-top to 0 */
+    /* background: pink; */
+  } 
+}
+
+
+/*
+  When 2 (instead of 3) flexbox items: "Center and right align flexbox elements" - no great solutions really... 
+  - https://codepen.io/clintonc/pen/NJjQMY
+  - https://stackoverflow.com/questions/38948102/center-and-right-align-flexbox-elements
+    - I use a dummy-burger div to achieve this
+*/
+/* @media (max-width: calc(12.5px * 60) ) { */
+@media (max-width: calc(768px) ) {
+  .wrapper {
+    width: 100%;
+    /* background: yellowgreen; */
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links-dropdown {
+    display: flex;
+  }
+
+  nav .burger {
+    display: block;
+  }
+
+  /* about css "transform", anchor point for "rotate", etc. - https://css-tricks.com/almanac/properties/t/transform-origin/ */
+  .burger-open .line1 {
+    transform: translate(0, 0.5rem) rotate(-45deg);
+  }
+  .burger-open .line2 {
+    opacity: 0;
+  }
+  .burger-open .line3 {
+    transform: translate(0, -0.5rem) rotate(45deg);
+  }
+
+  nav .dummy-burger {
+    display: block;
+  }
+
+
+  .content-wrapper {
+    padding-top: 0;
+    display: flex;
+    max-width: 100%;
+    z-index: 100;
+  }
+
+  .content-area-split {
+    width: 100%;
+    grid-template-areas: 
+      'side-content side-content'
+      'main-content main-content';
+    grid-template-rows: 2rem auto;
+    row-gap: 0.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .content-area-split .side-content {
+    background: #f4f1ea;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .side-image {
+    display: none;
+  }
+
+  .about-headers {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .about-headers li {
+    margin: 0 1rem;
+  }
+
+  .paper-filters {
+    width: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .paper-filters p {
+    margin: 0 1rem;
+  }
+  
+} 
+
