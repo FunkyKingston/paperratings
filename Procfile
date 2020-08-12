@@ -1,0 +1,1 @@
+web: gunicorn paperratings_project.wsgi
