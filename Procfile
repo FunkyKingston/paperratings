@@ -1,1 +1,1 @@
-web: gunicorn paperratings_project.wsgi
+web: gunicorn --pythonpath paperratings_project paperratings_project.wsgi
