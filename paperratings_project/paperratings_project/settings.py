@@ -37,8 +37,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'i9$-mvdj^n$sphub4h)(l0ppl1uq_i
 # About different shells and using venv (activate vs activate.bat, etc.): https://docs.python.org/3/library/venv.html
 
 
-# DEBUG = True
-DEBUG = (os.environ.get('DJANGO_DEBUG', "True") == "True") # -> if DJANGO_DEBUG is "True" ->  Boolean True (DEBUG must be set to a boolean)
+DEBUG = True
+# DEBUG = (os.environ.get('DJANGO_DEBUG', "True") == "True") # -> if DJANGO_DEBUG is "True" ->  Boolean True (DEBUG must be set to a boolean)
 print("DEBUG: ", DEBUG)
 
 ALLOWED_HOSTS = [
