@@ -73,6 +73,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -173,8 +174,8 @@ USE_TZ = True
 ######################################################
 # For production it is necessary to specify STATIC_ROOT, https://docs.djangoproject.com/en/3.0/howto/static-files/deployment/
 # - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment." - https://docs.djangoproject.com/en/3.0/ref/settings/#static-files
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 
 # Heroku-specific information - DJANGO AND STATIC ASSETS (including the "whitenoise" package) - https://devcenter.heroku.com/articles/django-assets
 # - Corey Schafer, "Deploy using Heroku": https://www.youtube.com/watch?v=6DI_7Zja8Zc&t=2691s
