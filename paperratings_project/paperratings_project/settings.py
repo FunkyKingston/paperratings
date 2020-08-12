@@ -8,7 +8,7 @@ For the full list of settings and their values, see:
 
 import os
 
-# import dj_database_url
+import dj_database_url
 
 
 # with Debug = False -> I get the following errors
@@ -126,8 +126,9 @@ DATABASES = {
 # Heroku: Update database configuration from $DATABASE_URL.
 # import dj_database_url
 
-# db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(db_from_env)
+db_from_env = dj_database_url.config(conn_max_age=500)
+print("db_from_env: ", db_from_env)
+DATABASES['default'].update(db_from_env)
 
 
 # or, from: https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-python
@@ -172,7 +173,8 @@ USE_TZ = True
 ######################################################
 # For production it is necessary to specify STATIC_ROOT, https://docs.djangoproject.com/en/3.0/howto/static-files/deployment/
 # - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment." - https://docs.djangoproject.com/en/3.0/ref/settings/#static-files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
 
 # Heroku-specific information - DJANGO AND STATIC ASSETS (including the "whitenoise" package) - https://devcenter.heroku.com/articles/django-assets
 # - Corey Schafer, "Deploy using Heroku": https://www.youtube.com/watch?v=6DI_7Zja8Zc&t=2691s
