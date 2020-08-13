@@ -7,25 +7,12 @@ For the full list of settings and their values, see:
 """
 
 import os
-
 import dj_database_url
-
-
-# with Debug = False -> I get the following errors
-# - Refused to apply style from 'http://localhost:8000/static/css/main.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.   http://localhost:8000/
-# - Refused to execute script from 'http://localhost:8000/static/main.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.   http://localhost:8000/
-# import mimetypes
-# mimetypes.add_type("text/css", ".css", True) # does this write to Regedit? (Windows)
-# and something like..(?)   mimetypes.add_type("application/javascript", ".js", True) 
-
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'i9$-mvdj^n$sphub4h)(l0ppl1uq_ii2!d#ov^_4v1i=_(wpo)')
@@ -37,8 +24,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'i9$-mvdj^n$sphub4h)(l0ppl1uq_i
 # About different shells and using venv (activate vs activate.bat, etc.): https://docs.python.org/3/library/venv.html
 
 
-DEBUG = True
-# DEBUG = (os.environ.get('DJANGO_DEBUG', "True") == "True") # -> if DJANGO_DEBUG is "True" ->  Boolean True (DEBUG must be set to a boolean)
+# DEBUG = True 
+DEBUG = (os.environ.get('DJANGO_DEBUG', "True") == "True") # -> if DJANGO_DEBUG is "True" ->  Boolean True (DEBUG must be set to a boolean)
 print("DEBUG: ", DEBUG)
 
 ALLOWED_HOSTS = [
@@ -51,7 +38,6 @@ ALLOWED_HOSTS = [
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -63,12 +49,12 @@ INSTALLED_APPS = [
     'knox',
     'accounts',
     'papers',
-    #'frontend', # not set up as a django app, added under TEMPLATE 'DIRS' & included in the base urls.py as url('', TemplateView.as_view(template_name="index.html")),
+    #'frontend', # not set up as a django app, added below in TEMPLATES -> DIRS & included in the base urls.py as url('', TemplateView.as_view(template_name="index.html")),
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': 
-    ('knox.auth.TokenAuthentication',) # OBS! måste ha med , efter här för att göra till en tuple (med ett element)
+    ('knox.auth.TokenAuthentication',) # Note, needs to be a tuple, thus the trailing comma
 }
 
 MIDDLEWARE = [
@@ -105,7 +91,6 @@ WSGI_APPLICATION = 'paperratings_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -113,32 +98,16 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'paperratings_project',
-#         'USER': 'funkykingston',
-#         'PASSWORD': 'mypassword',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
 
-# Heroku: Update database configuration from $DATABASE_URL.
-# import dj_database_url
-
-db_from_env = dj_database_url.config(conn_max_age=500)
+# Deploying to Heroku: Update database configuration using python package "dj-database-url"
+db_from_env = dj_database_url.config(conn_max_age=500) #, ssl_require=True
 print("db_from_env: ", db_from_env)
 DATABASES['default'].update(db_from_env)
 
 
-# or, from: https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-python
-# - DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True) 
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -157,30 +126,33 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
 ######################################################
 # Static files (CSS, JavaScript, Fonts, Images, ...) # - https://docs.djangoproject.com/en/3.0/howto/static-files/
 ######################################################
+# *** PRODUCTION ***
+# ******************
 # For production it is necessary to specify STATIC_ROOT, https://docs.djangoproject.com/en/3.0/howto/static-files/deployment/
 # - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment." - https://docs.djangoproject.com/en/3.0/ref/settings/#static-files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static') 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Heroku-specific information - DJANGO AND STATIC ASSETS (including the "whitenoise" package) - https://devcenter.heroku.com/articles/django-assets
+
+# Heroku-specific information - DJANGO AND STATIC ASSETS (including the "WhiteNoise" package) - https://devcenter.heroku.com/articles/django-assets
 # - Corey Schafer, "Deploy using Heroku": https://www.youtube.com/watch?v=6DI_7Zja8Zc&t=2691s
 
+# optionally: ( https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment )
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+# *******************
+# *** DEVELOPMENT *** (i.e. running locally)
+# *******************
 # During development, paths to static files are specified in STATIC_URL and STATICFILES_DIRS
 STATIC_URL = '/static/'
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage' # add 'whitenoise' package to requirements.txt, see e.g. https://www.youtube.com/watch?v=r0ECufCyyyw

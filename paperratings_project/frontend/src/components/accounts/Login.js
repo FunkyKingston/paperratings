@@ -29,8 +29,7 @@ export class Login extends Component {
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
-    console.log(this.props)
-    // try login in with e.g. MamaJamaica / 123456 (or whatever user I created earlier using Postman)
+    // console.log(this.props)
     if (this.props.isAuthenticated) {
       return <Redirect to="/" />; 
       // TO DO: instead, redirect to page the user was on when going to the login page! 
@@ -40,12 +39,10 @@ export class Login extends Component {
     const { username, password } = this.state;
     return (
       <div className="content-area-centered adjust-vertical">
-      {/*<div className="content-area-centered" style={{position: 'absolute', top: '40%', transform: 'translate(-50%, -50%)'}}>*/}
 
         <h2 className="text-center mb1">Log in</h2>
 
         <div className="auth-form">
-          {/* <h2 className="text-center mb1">Log in</h2> */}
 
           <form onSubmit={this.onSubmit}>
             <div className="form-item">
@@ -78,8 +75,8 @@ export class Login extends Component {
               </button>
             </div>
 
-            {/*style={{marginTop: '1.0em'}}*/}
-            {/*<p>Don't have an account? <Link to="/join">Join</Link></p>*/}
+            
+            <p style={{fontSize: '0.9rem', marginTop: '1.2rem', color: '#ccc'}}>Don't have an account? <Link to="/join" style={{color: "#ccc"}}>Join</Link></p>
             
           </form>
         </div>

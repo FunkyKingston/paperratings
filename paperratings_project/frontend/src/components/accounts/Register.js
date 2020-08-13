@@ -52,8 +52,6 @@ export class Register extends Component {
     const { username, email, password, password2 } = this.state;
     return (
       <div className="content-area-center adjust-vertical">
-      {/*<div className="content-area-center">*/}
-      {/*<div className="content-area-full">*/}
         <h2 className="text-center mb1">Create account</h2>
 
         <div className="auth-form">
@@ -110,7 +108,8 @@ export class Register extends Component {
               </button>
             </div>
             
-            {/*<p>Already have an account? <Link to="/login">Login</Link></p>*/}
+
+            <p style={{fontSize: '0.9rem', marginTop: '1.2rem', color: '#ccc'}}>Already have an account? <Link to="/login" style={{color: "#ccc"}}>Log in</Link></p>
 
           </form>
         </div>

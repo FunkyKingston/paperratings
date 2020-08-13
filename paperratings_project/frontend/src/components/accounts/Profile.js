@@ -12,7 +12,6 @@ export class Profile extends Component {
       <div className="content-area-full">
         <h1>Profile</h1>  
         <p>Welcome {user.username}!</p>
-        {/* <p className="tomasfixaicss">{user ? `Welcome ${user.username}` : ""}<p/> */}
       </div>
     )
   }

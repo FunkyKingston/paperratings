@@ -28,8 +28,8 @@ export const loadUser = () => (dispatch, getState) => { // called in App.js duri
         payload: res.data
       });
     }).catch(err => {
-      console.log("loadUser err.response:")
-      console.log(err.response)
+      // console.log("loadUser err.response:")
+      // console.log(err.response)
       /*
         TO DO (for this as well as all other actions):
         1. dispatch returnErrors, not implemented yet - https://www.youtube.com/watch?v=Fia-GGgHpK0&list=PLillGF-RfqbbRA-CIUxlxkUpbq0IFkX60&index=4
@@ -56,8 +56,8 @@ export const login = (username, password) => dispatch => {
 
   axios.post('/api/auth/login', body, config)
     .then(res=> {
-      console.log('/api/auth/login called - res.data:')
-      console.log(res.data) // the response from the Django API
+      // console.log('/api/auth/login called - res.data:')
+      // console.log(res.data) // the response from the Django API
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data

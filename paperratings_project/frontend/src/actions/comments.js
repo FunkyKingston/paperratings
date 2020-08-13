@@ -52,9 +52,6 @@ export const addComment = (comment) => (dispatch, getState) => {
     .post("/api/comments/", comment)
     .then(res => {
       const user_data = getState().auth.user;
-      // console.log("addComment-function, user_data:")
-      // console.log(user_data)
-      // console.log({id: res.data.id, text: res.data.text, time: res.data.time, user_data: user_data})
       dispatch({
         type: ADD_COMMENT,
         // payload: res.data // res - the response from the server, in the format of CommentSerializer

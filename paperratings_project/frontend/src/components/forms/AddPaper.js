@@ -10,7 +10,6 @@ export class AddPaper extends Component {
     authors: "",
     abstract: "",
     journal: "",
-    // date_published: "2020-01-01",
     date_published: "",
     doi: "",
     pdflink: ""
@@ -42,7 +41,7 @@ export class AddPaper extends Component {
     // - ...
   };
 
-  // bootstrap classes, see at   https://bootswatch.com/4/cosmo/bootstrap.css
+  // bootstrap classes, see at https://bootswatch.com/4/cosmo/bootstrap.css
   render() {
     const { title, authors, abstract, journal, date_published, doi, pdflink } = this.state;
     return (
@@ -109,21 +108,4 @@ export class AddPaper extends Component {
   }
 }
 
-/*
-type="textarea" for larger freetext box
-type="email" if email input
-type="date" for inputting date, ...
-*/
-
-//export default AddPaper;
-
-/* mapStateToProps not necessary here. Brad:
-  we were bringing in state. with this component we are simply calling 
-  the action, we don't need to bring papers back in (and thus map to props)
-*/
-//const mapStateToProps = () => ({ });
-
-
-// gives access to this.props.addPaper in this AddPaper component
-//export default connect({ addPaper })(AddPaper);
 export default connect(null, { addPaper })(AddPaper);

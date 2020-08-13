@@ -18,8 +18,8 @@ export class Comment extends Component {
 
   // https://reactjs.org/docs/state-and-lifecycle.html - read up on pitfalls when using setState(): https://reactjs.org/docs/faq-state.html
   doEdit = e => this.setState({ isEditing: true });
-  // below variant better? is there any difference for the current scenario?
-  // doEdit = e => this.setState((state) => { // important, state - not this.state, with this function
+  // Below variant to be used when current state is needed as input
+  // doEdit = e => this.setState((state) => { // important when using setState(), use state - not this.state
   //   return {isEditing: true}
   // });
 
@@ -27,9 +27,6 @@ export class Comment extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    // console.log('submit edit comment... this.props.comment:');
-    // console.log(this.props.comment)
-
     const { id, text, time, user_data } = this.props.comment;
 
     // comment data that will be sent to the django backend, following the format of CommentSerializer (not CommentDetailSerializer)

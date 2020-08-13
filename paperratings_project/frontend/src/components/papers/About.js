@@ -62,9 +62,7 @@ export class About extends Component {
           </div>
 
 
-          {/* <div style={{"background": "red"}}> */}
           <div>
-            {/* <h3>About</h3> */}
             <ul className="about-headers sans-serif">
               <li><a href="#howtouse" className="link-style">How to use</a></li>
               <li><a href="#openapi" className="link-style">Open API</a></li>

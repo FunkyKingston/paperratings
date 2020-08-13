@@ -1,30 +1,18 @@
 import React, { Component, Fragment } from 'react';
-
 import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getComments, deleteComment } from '../../actions/comments';
 import { getPaper } from '../../actions/papers';
-
 import Comment from './Comment';
 import AddComment from '../forms/AddComment';
 
 
 /*
-TO DO: Add "rate paper" functionality, check out some useful packages, maybe this? https://www.npmjs.com/package/react-star-ratings
-
-TO DO: Avoid loading page before data is fetched from backend:
-- https://stackoverflow.com/questions/57203298/react-js-how-to-prevent-rendering-before-state-being-updated-hooks
-  - 1. Have the component render itself in a "loading" state
-  OR
-  - 2. Don't create the component until you have the data — e.g., move the fetch operation into its parent, ...
+  TO DO: Add "rate paper" functionality, check out some useful packages, maybe this? https://www.npmjs.com/package/react-star-ratings
 */
 
 export class PaperDetails extends Component {
-  // state = { 
-  //   isLoaded: false
-  // };
   
   static propTypes = {
     currentPaper: PropTypes.object.isRequired,
@@ -42,24 +30,21 @@ export class PaperDetails extends Component {
   */
 
   componentDidMount() {
-    // this.props.getPaper(this.props.match.params.id)
-    // this.props.getComments(this.props.match.params.id)
-
-    console.log(`ran componentDidMount() in PaperDetails.js ... with this.props.match.params.id = ${this.props.match.params.id}`);
-    console.log(this.props); // "match" prop added by BrowserRouter - as demonstrated in https://www.youtube.com/watch?v=Law7wfdg_ls
-    console.log("----------")    
+    // console.log(`ran componentDidMount() in PaperDetails.js ... with this.props.match.params.id = ${this.props.match.params.id}`);
+    // console.log(this.props); // "match" prop added by BrowserRouter - as demonstrated in https://www.youtube.com/watch?v=Law7wfdg_ls
+    // console.log("----------")    
 
 
     if(this.props.currentPaper.id) {
-      console.log("this.props.currentPaper.id is defined");
-      console.log(`this.props.currentPaper.id = ${this.props.currentPaper.id}`);
-      console.log(`this.props.match.params.id = ${this.props.match.params.id}`);
+      // console.log("this.props.currentPaper.id is defined");
+      // console.log(`this.props.currentPaper.id = ${this.props.currentPaper.id}`);
+      // console.log(`this.props.match.params.id = ${this.props.match.params.id}`);
       if(this.props.match.params.id != this.props.currentPaper.id) {
         this.props.getPaper(this.props.match.params.id)
         this.props.getComments(this.props.match.params.id)
       };
     } else {
-      console.log("this.props.currentPaper.id is NOT defined");
+      // console.log("this.props.currentPaper.id is NOT defined");
       this.props.getPaper(this.props.match.params.id)
       this.props.getComments(this.props.match.params.id)
     };
@@ -83,21 +68,18 @@ export class PaperDetails extends Component {
   // }
 
   render() {
-    console.log(`ran render() in PaperDetails.js ... with this.props.match.params.id = ${this.props.match.params.id}`) 
+    // console.log(`ran render() in PaperDetails.js ... with this.props.match.params.id = ${this.props.match.params.id}`) 
     const { currentPaper, auth } = this.props;
 
-    //const { id } = this.props.match.params;
-    //console.log(`render paper details for paper with id: ${id}`)
+    // const { id } = this.props.match.params;
+    // console.log(`render paper details for paper with id: ${id}`)
     // console.log("Print this.props from PaperDetails render function")
     // console.log(this.props);
     
-    // console.log(`this.state.isLoaded: ${this.state.isLoaded}`);
-
     return (
       <div className="content-area-full">
         {/* <p>TMP: primary key of current paper: {this.props.match.params.id}</p> */}
         
-        {/* {this.state.isLoaded ?  */}
         {this.props.match.params.id == this.props.currentPaper.id ? // as else-statement e.g. a spinner can be displayed
           <div>
           <div className="paper-details">
@@ -118,9 +100,9 @@ export class PaperDetails extends Component {
             (this.props.comments === undefined || this.props.comments.length == 0) ?
               // - https://stackoverflow.com/questions/24403732/how-to-check-if-array-is-empty-or-does-not-exist
               <p className="mb1">Add the first comment for this paper!</p>
-              // console.log("there are no comments for this paper")
               :
-              console.log("there are comments for this paper!")
+              // console.log("there are comments for this paper!")
+              ""
           }
 
           { 
@@ -133,7 +115,7 @@ export class PaperDetails extends Component {
             this.props.auth.isAuthenticated ? 
               <AddComment />
               :
-              <p className="mb1">Please log in <Link to={'/login'} style={{color:" black"}}>log in</Link> to add a comment!</p>
+              <p className="mb1">Please log in <Link to={'/login'} style={{color: "black"}}>log in</Link> to add a comment!</p>
               // TO DO: add redirect based on page history, to go back to the same PaperDetails-page after logging in 
               // - e.g. using useHistory from react-router-dom? - https://serverless-stack.com/chapters/redirect-on-login-and-logout.html
           }
@@ -141,9 +123,6 @@ export class PaperDetails extends Component {
 
           :
           ""
-          // <div>
-          //   <p>this.state.isLoaded is False!</p>
-          // </div>
         }
 
       </div>
