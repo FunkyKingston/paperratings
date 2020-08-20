@@ -46,9 +46,12 @@ export class AddPaper extends Component {
     const { title, authors, abstract, journal, date_published, doi, pdflink } = this.state;
     return (
       <Fragment>
+
         <h3 className="sans-serif">ADD PAPER (Manual entry for now, to implement and test other functionality)</h3>
         <p className="mb1">...you can also interact with the papers API at /api/papers/ (the trailing backslash is necessary)</p>
+        
         <div>
+
           <form onSubmit={this.onSubmit}>
             <div className="form-item">
               <label>Title</label>
@@ -102,6 +105,7 @@ export class AddPaper extends Component {
             </div>
             <button type="submit" className="btn-small-blue">Submit</button>
           </form>
+          
         </div>
       </Fragment>
     );

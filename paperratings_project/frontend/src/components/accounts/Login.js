@@ -6,7 +6,7 @@ import { login } from '../../actions/auth';
 
 
 export class Login extends Component {
-  // "component-level state, has nothing to do with redux" -  - https://spin.atomicobject.com/2017/06/07/react-state-vs-redux-state/#:~:text=Redux%20manages%20state%20and%20state,data%20is%20stored%20in%20Redux.
+  // "component-level state, has nothing to do with redux" - https://spin.atomicobject.com/2017/06/07/react-state-vs-redux-state/#:~:text=Redux%20manages%20state%20and%20state,data%20is%20stored%20in%20Redux.
   state = {
     username: '',
     password: '',
@@ -21,7 +21,6 @@ export class Login extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    // console.log('Login onSubmit function called...')
     this.props.login(this.state.username, this.state.password);
   };
 
@@ -76,11 +75,11 @@ export class Login extends Component {
             </div>
 
             
-            <p style={{fontSize: '0.9rem', marginTop: '1.2rem', color: '#ccc'}}>Don't have an account? <Link to="/join" style={{color: "#ccc"}}>Join</Link></p>
+            <p style={{fontSize: '0.9rem', marginTop: '1.2rem', color: '#ccc'}}>Don't have an account? <Link to="/join" className="hover-black" style={{color: "#ccc"}}>Join</Link></p>
             
           </form>
-        </div>
 
+        </div>
       </div>
     );
   }

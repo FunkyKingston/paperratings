@@ -73,14 +73,6 @@ export class Header extends Component {
     } else {
       rightLinks = guestLinks;
     }
-
-    // let burgerElement = document.getElementsByClassName("burger");
-    // burgerElement.classList.add("open");
-    // console.log(burgerElement);
-    // let tmp = document.getElementById("tmp")
-    // let tmp = document.getElementById("tmp").classList.add("mynewclass");
-    // tmp.classList.add("test");
-    // console.log(tmp);
     
 
     return (
@@ -99,7 +91,8 @@ export class Header extends Component {
           </div>
 
           <div className="nav-flex-item nav-logo">
-            <h3><Link className="no-text-decoration" to={'/'}>PaperRatings.com</Link></h3>
+            {/* <h3><Link className="no-text-decoration" to={'/'}>PaperRatings.com</Link></h3> */}
+            <h3><Link className="no-text-decoration no-highlight" to={'/'}>PaperRatings.com</Link></h3>
           </div>
 
           <div className="nav-flex-item nav-links">
@@ -107,9 +100,9 @@ export class Header extends Component {
           </div>
           
           {this.state.dropdownOpen ?
-            <Burger classList={"burger burger-open"} onToggleDropdown={this.onToggleDropdown} />
+            <Burger classList={"burger burger-open no-highlight"} onToggleDropdown={this.onToggleDropdown} />
             :
-            <Burger classList={"burger"} onToggleDropdown={this.onToggleDropdown} />
+            <Burger classList={"burger no-highlight"} onToggleDropdown={this.onToggleDropdown} />
           }
         </nav>
 

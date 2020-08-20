@@ -16,15 +16,15 @@ export class About extends Component {
         
           <h1>About</h1>
           <div className="about-item">
-            <p className="mb1">This webpage is built with Django and React, and is one of my personal "projects" on my recent mission to learn more in the field of web development. So who am I? I am an Electrical Engineer and a PhD in digital image processing, an interest in machine learning and of course in IT development! Some of my other hobbies social dancing (mainly Kizomba) and DJing!</p>
+            <p className="mb1">This webpage is built with Django and React, and is one of my personal "projects" on my recent mission to learn more in the field of web development. So who am I? I am an Electrical Engineer and a PhD in digital image processing, with an interest in machine learning and of course in IT development! Some of my other hobbies social dancing (mainly Kizomba) and DJing!</p>
             <p className="mb1">My LinkedIn profile is found <a href="https://www.linkedin.com/in/tomas-bengtsson-17bba412/" target="_blank" style={{"color": "black"}}>here</a>.</p>
-            <p className="mb1">The code for this site is available at Github in this repository - upload and add link!</p>
+            <p className="mb1">The code for this site is available at Github in this repository - TO DO: upload and add link!</p>
           </div>
 
           <hr />
           <div className="about-item">
             <h3 id="howtouse">How to use</h3>
-            <p className="mb1">The intention with this (as of now incomplete) website is to provide a searchable database of scientific papers (read from and continuously updated from external APIs), as well as functionality to comment/leave reviews, rate papers, and to save and organize favorite papers as a logged in user.</p>
+            <p className="mb1">The intention with this (as of now incomplete) website is to provide a searchable database of scientific papers (as a next step read from, and continuously updated from, external APIs), as well as functionality to comment/leave reviews, rate papers, and to save and organize favorite papers as a logged in user.</p>
             <p className="mb1">Currently, there is a papers API which is accessible to all users (no login required) to provide a temporary list of papers to test other functionality with. It is possible to create an account, to log in, to view a paper details page, and to add/edit/delete comments for papers. The API is setup using Django and the data is currently stored in a relational database.</p>
           </div>
 

@@ -22,14 +22,13 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log('register submit')
+    // console.log('register submit')
     const { username, email, password, password2 } = this.state;
     if(password !== password2 ) {
-      // not implemented (yet)
-      //this.props.createMessage({ passwordsNotMatch: 'Passwords do not match'})
-      console.log('register submit, passwords do not match')
+      // not implemented (yet) - this.props.createMessage({ passwordsNotMatch: 'Passwords do not match'})
+      // console.log('register submit, passwords do not match')
     } else {
-      console.log('register submit, passwords DO match')
+      // console.log('register submit, passwords DO match')
       const newUser = {
         username,
         password,
@@ -51,7 +50,8 @@ export class Register extends Component {
 
     const { username, email, password, password2 } = this.state;
     return (
-      <div className="content-area-center adjust-vertical">
+      <div className="content-area-centered adjust-vertical">
+
         <h2 className="text-center mb1">Create account</h2>
 
         <div className="auth-form">
@@ -112,8 +112,8 @@ export class Register extends Component {
             <p style={{fontSize: '0.9rem', marginTop: '1.2rem', color: '#ccc'}}>Already have an account? <Link to="/login" style={{color: "#ccc"}}>Log in</Link></p>
 
           </form>
-        </div>
 
+        </div>
       </div>
     );
   }

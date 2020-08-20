@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 
 import Header from './layout/Header';
@@ -25,12 +26,21 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
 class App extends Component {
-  componentDidMount() {
+  // componentDidMount() { // Note: componentDidMount() runs after render()
+  // dispatching loadUser() in the constructor() function instead of in componentDidMount() ensures that the auth state is set before render() is called, thus PrivateRoute functions as intended when going to a PrivateRoute in the browser's address field, thus triggering a server-side rendering of the webpage, read more: 
+  // - https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually?rq=1
+  // - https://stackoverflow.com/questions/51407402/react-router-dom-private-route-always-redirects-to-login
+  constructor() { 
+    super()
     store.dispatch(loadUser());
-    // console.log("ran componentDidMount() in App.js...")
   }
 
+  
   render() {
+    
+    // console.log(`this.props.auth:`)
+    // console.log(this.props.auth)
+
     return (
       <Provider store={store}>
         <Router>
@@ -62,5 +72,9 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+connect(mapStateToProps)(App);
 
 ReactDOM.render(<App />, document.getElementById('app'));

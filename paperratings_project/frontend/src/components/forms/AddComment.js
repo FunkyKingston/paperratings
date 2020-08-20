@@ -47,6 +47,7 @@ export class AddComment extends Component {
         <h3 className="sans-serif">ADD COMMENT</h3>
 
         <div>
+
           <form onSubmit={this.onSubmit}>
             <div className="form-item">
               {/* <label>Comment</label> */}
@@ -60,6 +61,7 @@ export class AddComment extends Component {
             </div>
             <button type="submit" className="btn-small-blue">Submit</button>
           </form>
+          
         </div>
       </Fragment>
     )

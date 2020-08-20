@@ -9,7 +9,8 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => ( //de-structu
     {...rest}
     render={props => {
       if(auth.isLoading) {
-        return <h2>Loading...</h2>
+        // return <h2>Loading...</h2>
+        return ""
       } else if(!auth.isAuthenticated) {
         return <Redirect to="/login" />;
       } else {
@@ -18,6 +19,29 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => ( //de-structu
     }}
   />
 );
+
+
+// function PrivateRoute({ component: Component, auth, ...rest }) {
+  
+//   console.log("auth props:")
+//   console.log(auth)
+
+//   return (
+//     <Route 
+//       {...rest}
+//       render={props => {
+//         if(auth.isLoading) {
+//           return <h2>Loading...</h2>
+//         } else if(!auth.isAuthenticated) {
+//           return <Redirect to="/login" />;
+//         } else {
+//           return <Component {...props} />;
+//         }
+//       }}
+//     />
+//   )
+// };
+
 
 const mapStateToProps = state => ({
   auth: state.auth // gives access to this.props.auth, mapping from redux state.auth

@@ -27,12 +27,24 @@
   color: black;
   --navbar-height: 3rem;
   --bg-body: #fff;
+  
   --dark: #262626;
+  --item-background: #f4f1ea;
+  
+  /* when updating the color theme of the page, also need to update colors for buttons, etc. */
+  /* --dark: #446e5c;
+  --item-background: #fff1dc; */
+
   --primary: #ddd;
   --light: #fff;
   --shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
   --side-padding: 0.6rem;
 }
+
+
+/* Try out different color themes, e.g. "jungle green" (google->), like at https://htmlcolors.com/palette/75/green-jungle */
+
+
 
 /* apply for every element on the page */
 * {
@@ -69,6 +81,16 @@ hr {
   color: var(--primary);
 }
 
+/* 
+  https://developer.mozilla.org/en-US/docs/Web/CSS/WebKit_Extensions
+  - "Applications based on WebKit or Blink, such as Safari and Chrome, support a number of special WebKit extensions to CSS."
+*/
+.no-highlight {
+  -webkit-tap-highlight-color: transparent; /* https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-tap-highlight-color */
+}
+
+
+
 .indented {
   text-indent: 3rem;
 }
@@ -92,7 +114,7 @@ hr {
   display: flex;
   flex-direction: column;
   /* justify-content: flex-start; by default, but <footer> becomes placed at bottom due to setting min-height: 100vh; */
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 
@@ -219,6 +241,7 @@ nav .dummy-burger {
 .content-area-full {
   width: calc(80rem - 2*var(--side-padding));
   padding-top: 2rem;
+  /* background: green; */
   padding-left: var(--side-padding);
   padding-right: var(--side-padding);
 }
@@ -229,8 +252,10 @@ nav .dummy-burger {
 }
 
 .adjust-vertical {
+  padding-top: 0rem;
   position: absolute; 
   top: 40%; 
+  /* top: 0%; */
   transform: translate(-50%, -50%);
 }
 
@@ -306,12 +331,12 @@ button {
   cursor: pointer;
 }
 
-.btn-transparent {
+/* .btn-transparent {
   border: 1px solid black;
 }
 .btn-transparent:hover {
   opacity: 0.8;
-}
+} */
 
 .btn-large {
   width: 100%;
@@ -352,7 +377,8 @@ button {
 
 /* Papers.js component */
 .paper-item {
-  background: #f4f1ea;
+  /* background: #f4f1ea; */
+  background: var(--item-background);
   padding: 0.2rem 0.2rem;
   margin: 0.6rem 0;
   border-radius: 5px;
@@ -374,14 +400,14 @@ button {
 
 /* PaperDetails.js component */
 .paper-details {
-  background: #f4f1ea;
+  background: var(--item-background);
   padding: 0.2rem 0.2rem;
   margin: 0.6rem 0;
   border-radius: 5px;
 }
 
 .comment-item {
-  background: #f4f1ea;
+  background: var(--item-background);
   padding: 0.2rem 0.2rem;
   margin: 0.6rem 0;
   border-radius: 5px;
@@ -416,7 +442,7 @@ button {
 /* Footer.js component */
 /* https://css-tricks.com/couple-takes-sticky-footer/ - using the flexbox approach */
 footer {
-  background: #f4f1ea;
+  background: var(--item-background);
   height: 5rem;
   line-height: 2rem;
   width: 100%;
@@ -451,14 +477,31 @@ footer {
 }
 
 
-/*
-  When 2 (instead of 3) flexbox items: "Center and right align flexbox elements" - no great solutions really... 
+
+/* @media (max-width: calc(12.5px * 60) ) { */
+@media (max-width: 768px ) {
+  /*
+  When 2 (instead of 3) flexbox items and I want to "center and right align flexbox elements" - no great solutions really... 
   - https://codepen.io/clintonc/pen/NJjQMY
   - https://stackoverflow.com/questions/38948102/center-and-right-align-flexbox-elements
     - I use a dummy-burger div to achieve this
 */
-/* @media (max-width: calc(12.5px * 60) ) { */
-@media (max-width: calc(768px) ) {
+/* 
+  TO DO: 100vh doesn't work satisfactorily on mobile (address bar pushes everything down)
+  - https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
+  - more reading: 
+    - https://css-tricks.com/css-fix-for-100vh-in-mobile-webkit/ <- states that it needs to be set for the body element (not my wrapper), now works!
+    - 
+*/
+
+  /* said to be needed, in addition to the body min-height, for upcoming browser versions */
+  html { 
+    height: -webkit-fill-available;
+  }
+  body {
+    min-height: -webkit-fill-available;
+  }
+
   .wrapper {
     width: 100%;
     /* background: yellowgreen; */
@@ -499,6 +542,15 @@ footer {
     z-index: 100;
   }
 
+  /* .content-area-centered {
+    background: green;
+  } */
+
+  .content-area-full, 
+  .content-area-centered { 
+    padding-top: 1.0rem;
+  }
+
   .content-area-split {
     width: 100%;
     grid-template-areas: 
@@ -510,7 +562,7 @@ footer {
   }
 
   .content-area-split .side-content {
-    background: #f4f1ea;
+    background: var(--item-background);
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -540,4 +592,43 @@ footer {
   }
   
 } 
+
+/* 
+  Media query for mobile view with keyboard open (also need to consider/handle the address bar occupying space) 
+  - in Chrome devtools, the Nexus 5X device allows to bring up a keyboard - press the device orientation button and there keyboard can be added
+  "No - Viewport size does not change when the keyboard appears on iOS. Albeit, it puts the inputs into focus and view. Only on Android, does it change with the opening of the virtual keyboard (at least on Chrome)"
+  - https://html.developreference.com/article/11120251/Does+mobile+keyboard+affect+height+in+CSS+media+queries%3F
+  - 
+
+  
+  related: about mobile orientation, etc.
+  - https://stackoverflow.com/questions/8883163/css-media-query-soft-keyboard-breaks-css-orientation-rules-alternative-solut
+    - https://www.robinosborne.co.uk/2014/09/12/android-browsers-keyboards-and-media-queries/
+  - 
+*/
+
+/* triggered when keyboard is open but not when it's closed */
+@media (max-height: 400px ) {
+
+  /* .content-area-centered {
+    background: blue;
+  } */
+
+  .adjust-vertical {
+    /* padding-top: 2rem; */
+    padding-top: 1.5rem;
+    position: static; 
+    /* top: 40%;  */
+    /* top: 0%; */
+    transform: none;
+  }
+
+
+}
+
+/* concerning the viewport height and the address bar on mobile:
+   - https://stackoverflow.com/questions/39384154/calculating-viewport-height-on-chrome-android-with-css
+   - https://stackoverflow.com/questions/43575363/css-100vh-is-too-tall-on-mobile-due-to-browser-ui
+   - https://stackoverflow.com/questions/37112218/css3-100vh-not-constant-in-mobile-browser
+*/
 
