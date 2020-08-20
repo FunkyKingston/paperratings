@@ -138,16 +138,16 @@ USE_TZ = True
 ######################################################
 # *** PRODUCTION ***
 # ******************
+# Deploying Django to production (including the "whitenoise" package) - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
+
 # For production it is necessary to specify STATIC_ROOT, https://docs.djangoproject.com/en/3.0/howto/static-files/deployment/
 # - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment." - https://docs.djangoproject.com/en/3.0/ref/settings/#static-files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
-# Heroku-specific information - DJANGO AND STATIC ASSETS (including the "WhiteNoise" package) - https://devcenter.heroku.com/articles/django-assets
-# - Corey Schafer, "Deploy using Heroku": https://www.youtube.com/watch?v=6DI_7Zja8Zc&t=2691s
-
-# optionally: ( https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment )
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Django and Static Assets, to serve Media files on Heroku - https://devcenter.heroku.com/articles/django-assets
+# - WhiteNoise official docs - http://whitenoise.evans.io/en/stable/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # *******************
@@ -155,8 +155,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # *******************
 # During development, paths to static files are specified in STATIC_URL and STATICFILES_DIRS
 STATIC_URL = '/static/'
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage' # add 'whitenoise' package to requirements.txt, see e.g. https://www.youtube.com/watch?v=r0ECufCyyyw
-# - ALSO DO: add to wsgi.py, from whitenoise.django import DjangoWhiteNoise, application = DjangoWhiteNoise(application)
 
 # static files that aren't tied to any particular [django] app, but to the purely React-based /frontend subfolder
 # - https://docs.djangoproject.com/en/3.0/howto/static-files/

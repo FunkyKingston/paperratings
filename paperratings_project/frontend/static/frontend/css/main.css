@@ -616,7 +616,8 @@ footer {
 
   .adjust-vertical {
     /* padding-top: 2rem; */
-    padding-top: 1.5rem;
+    /* padding-top: 1.5rem; */
+    padding-top: 1.0rem; /* same padding as for .content-area-full, .content-area-centered in mobile view */
     position: static; 
     /* top: 40%;  */
     /* top: 0%; */
