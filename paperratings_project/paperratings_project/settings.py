@@ -1,9 +1,9 @@
 """
 For more information on this file, see: 
-- https://docs.djangoproject.com/en/3.0/topics/settings/
+- https://docs.djangoproject.com/en/3.1/topics/settings/
 
 For the full list of settings and their values, see: 
-- https://docs.djangoproject.com/en/3.0/ref/settings/
+- https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # 'whitenoise.runserver_nostatic', # for using whitenoise during development (instead of the default 'django.contrib.staticfiles') - http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'django.contrib.staticfiles',
     'rest_framework',
     'knox',
@@ -59,7 +60,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware', # http://whitenoise.evans.io/en/stable/django.html
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -134,42 +135,80 @@ USE_TZ = True
 
 
 ######################################################
-# Static files (CSS, JavaScript, Fonts, Images, ...) # - https://docs.djangoproject.com/en/3.0/howto/static-files/
+# Static files (CSS, JavaScript, Fonts, Images, ...) #
 ######################################################
-# *** PRODUCTION ***
-# ******************
-# Deploying Django to production (including the "whitenoise" package) - https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment
-
-# For production it is necessary to specify STATIC_ROOT, https://docs.djangoproject.com/en/3.0/howto/static-files/deployment/
-# - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment." - https://docs.djangoproject.com/en/3.0/ref/settings/#static-files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-
-# Django and Static Assets, to serve Media files on Heroku - https://devcenter.heroku.com/articles/django-assets
-# - WhiteNoise official docs - http://whitenoise.evans.io/en/stable/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 # *******************
-# *** DEVELOPMENT *** (i.e. running locally)
+# *** DEVELOPMENT *** (i.e. running locally, with Debug = True)
 # *******************
-# During development, paths to static files are specified in STATIC_URL and STATICFILES_DIRS
+# - Managing static files (e.g. images, JavaScript, CSS) - https://docs.djangoproject.com/en/3.1/howto/static-files/
+#   - Using django.contrib.staticfiles works fine during development/debug mode, however: 
+#     "This method is grossly inefficient and probably insecure, so it is unsuitable for production.""
+
+
+# URL to use when referring to static files located in STATIC_ROOT, e.g. http://127.0.0.1:8000/static/css/main.css
 STATIC_URL = '/static/'
 
-# static files that aren't tied to any particular [django] app, but to the purely React-based /frontend subfolder
-# - https://docs.djangoproject.com/en/3.0/howto/static-files/
+# Additional static files - those that aren't tied to any particular [django] app, but to the purely React-based /frontend subfolder - https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend', 'static', 'frontend'),
 ]
 
 
+# The file storage engine to use when collecting static files with the collectstatic management command - https://docs.djangoproject.com/en/3.1/ref/settings/#staticfiles-storage
+# - Default: STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+
+# ******************
+# *** PRODUCTION ***
+# ******************
+# - "Django and Static Assets", to serve Media files on Heroku - https://devcenter.heroku.com/articles/django-assets
+# - "WhiteNoise - Radically simplified static file serving for Python web apps" - http://whitenoise.evans.io/en/stable/ , http://whitenoise.evans.io/en/stable/django.html
+
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # setting up STATICFILES_STORAGE with WhiteNoise
+
+
+# For production it is necessary to specify STATIC_ROOT, https://docs.djangoproject.com/en/3.1/howto/static-files/deployment/
+# - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment." - https://docs.djangoproject.com/en/3.0/ref/settings/#static-files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
 ###############
 # Media files #
 ############### 
-# First example: the Corey Schafer tutorial at https://www.youtube.com/watch?v=UmljXZIypDc&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p&index=1
-
-
+# *******************
+# *** DEVELOPMENT *** (i.e. running locally, with Debug = True)
+# *******************
 # where uploaded files will be stored on the file system
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # BASE_DIR set by django
 # how we're going to access the media files in the browser
 MEDIA_URL = '/media/'
+
+
+# ******************
+# *** PRODUCTION ***
+# ******************
+# Serving Media Files - WhiteNoise is not suitable for serving user-uploaded “media” files.
+# - http://whitenoise.evans.io/en/stable/django.html#serving-media-files
+#   - discussion involving the author of WhiteNoise (evansd) - https://github.com/evansd/whitenoise/issues/32
+
+# - Corey Schafer - "Python Django Tutorial: Full-Featured Web App Part 13 - Using AWS S3 for File Uploads" - https://www.youtube.com/watch?v=kt3ZtW9MXhw&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p&index=16
+
+# - "Serve Django Static and Media Files in Production" - https://medium.com/swlh/serve-django-static-and-media-files-in-production-348fe6c7781d
+
+
+
+
+# - "Uploading images to REST API backend in React JS
+" - https://coleruche.com/post/uploading-images-to-REST-API-backend-in-React-JS/
+
+
+
+
+
+
+
+
+
+
+

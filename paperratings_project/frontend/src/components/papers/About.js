@@ -18,7 +18,13 @@ export class About extends Component {
           <div className="about-item">
             <p className="mb1">This webpage is built with Django and React, and is one of my personal "projects" on my recent mission to learn more in the field of web development. So who am I? I am an Electrical Engineer and a PhD in digital image processing, with an interest in machine learning and of course in IT development! Some of my other hobbies social dancing (mainly Kizomba) and DJing!</p>
             <p className="mb1">My LinkedIn profile is found <a href="https://www.linkedin.com/in/tomas-bengtsson-17bba412/" target="_blank" style={{"color": "black"}}>here</a>.</p>
-            <p className="mb1">The code for this site is available at Github in this repository - TO DO: upload and add link!</p>
+            <p className="mb1">The code for this site is available at <a href="https://github.com/FunkyKingston/paperratings" target="_blank" style={{"color": "black"}}>GitHub</a></p>
+            {/* Add Icons for the links to LinkedIn, GitHub, ... Some options:
+                - https://fontawesome.com/how-to-use/on-the-web/using-with/react 
+                - https://github.com/react-icons/react-icons
+                  - usage tutorial: https://www.youtube.com/watch?v=4l0nsK4ezNc
+            */}
+            {/* <p></p> */}
           </div>
 
           <hr />

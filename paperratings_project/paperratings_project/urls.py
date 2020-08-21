@@ -15,11 +15,9 @@ urlpatterns = [
 ] # + [url('', TemplateView.as_view(template_name="index.html"))]
 
 
-# print("settings.DEBUG: ", settings.DEBUG)
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG: # allows to serve (user-uploaded) media files during development/debug mode only
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # The React URLs need to be added last, otherwise the django URLs are overridden
 urlpatterns += [url('', TemplateView.as_view(template_name="index.html"))]

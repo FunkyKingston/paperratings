@@ -25,8 +25,7 @@ export class Profile extends Component {
       <div className="content-area-full">
         <h1>Profile</h1>  
         <p>Welcome {user.username}!</p>
-        <p><img src={user.profile.image} height="65" width="65" style={{"borderRadius": "50%", "marginTop": "1rem"}}/></p>
-        {/* <p><img className={{}} style={{"height": "65px", "width": "65px"}} src={user.profile.image}/></p> */}
+        {/* <p><img src={user.profile.image} style={{"borderRadius": "50%", "marginTop": "1rem", "height": "6rem", "width": "6rem"}}/></p> */}
         {/* <p>{user.profile.image}</p> */}
       </div>
     )
