@@ -199,8 +199,7 @@ MEDIA_URL = '/media/'
 
 
 
-# - "Uploading images to REST API backend in React JS
-" - https://coleruche.com/post/uploading-images-to-REST-API-backend-in-React-JS/
+# - "Uploading images to REST API backend in React JS - https://coleruche.com/post/uploading-images-to-REST-API-backend-in-React-JS/
 
 
 
