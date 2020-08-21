@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 
 import Header from './layout/Header';
@@ -71,10 +70,5 @@ class App extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-connect(mapStateToProps)(App);
 
 ReactDOM.render(<App />, document.getElementById('app'));
