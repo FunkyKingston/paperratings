@@ -60,7 +60,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware', # http://whitenoise.evans.io/en/stable/django.html
+    'whitenoise.middleware.WhiteNoiseMiddleware', # http://whitenoise.evans.io/en/stable/django.html (should/has to be placed directly after django.middleware.security.SecurityMiddleware)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -141,8 +141,9 @@ USE_TZ = True
 # *** DEVELOPMENT *** (i.e. running locally, with Debug = True)
 # *******************
 # - Managing static files (e.g. images, JavaScript, CSS) - https://docs.djangoproject.com/en/3.1/howto/static-files/
-#   - Using django.contrib.staticfiles works fine during development/debug mode, however: 
+#   - Using django.contrib.staticfiles works fine during development mode (DEBUG = True) however: 
 #     "This method is grossly inefficient and probably insecure, so it is unsuitable for production.""
+#     (- To use with DEBUG = False, need to force using --insecure flag https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#cmdoption-runserver-insecure )
 
 
 # URL to use when referring to static files located in STATIC_ROOT, e.g. http://127.0.0.1:8000/static/css/main.css
@@ -154,21 +155,20 @@ STATICFILES_DIRS = [
 ]
 
 
-# The file storage engine to use when collecting static files with the collectstatic management command - https://docs.djangoproject.com/en/3.1/ref/settings/#staticfiles-storage
-# - Default: STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-
-
 # ******************
 # *** PRODUCTION ***
 # ******************
+# - "Deploying static files" (not about [user-uploaded] media files) - https://docs.djangoproject.com/en/3.1/howto/static-files/deployment
 # - "Django and Static Assets", to serve Media files on Heroku - https://devcenter.heroku.com/articles/django-assets
-# - "WhiteNoise - Radically simplified static file serving for Python web apps" - http://whitenoise.evans.io/en/stable/ , http://whitenoise.evans.io/en/stable/django.html
 
+# -> "WhiteNoise - Radically simplified static file serving for Python web apps" - http://whitenoise.evans.io/en/stable/ , http://whitenoise.evans.io/en/stable/django.html
+
+# Optional:
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # setting up STATICFILES_STORAGE with WhiteNoise
 
 
-# For production it is necessary to specify STATIC_ROOT, https://docs.djangoproject.com/en/3.1/howto/static-files/deployment/
-# - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment." - https://docs.djangoproject.com/en/3.0/ref/settings/#static-files
+# For production it is necessary to specify STATIC_ROOT - https://docs.djangoproject.com/en/3.1/howto/static-files/deployment/
+# - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment."
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
