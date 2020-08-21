@@ -146,7 +146,7 @@ USE_TZ = True
 #     (- To use with DEBUG = False, need to force using --insecure flag https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/#cmdoption-runserver-insecure )
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # URL to use when referring to static files located in STATIC_ROOT, e.g. http://127.0.0.1:8000/static/css/main.css
 STATIC_URL = '/static/'
@@ -171,7 +171,7 @@ STATICFILES_DIRS = [
 
 # For production it is necessary to specify STATIC_ROOT - https://docs.djangoproject.com/en/3.1/howto/static-files/deployment/
 # - STATIC_ROOT - "The absolute path to the directory where collectstatic (python manage.py collectstatic) will collect static files for deployment."
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 
